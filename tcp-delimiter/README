@@ -1,0 +1,23 @@
+使用消息边界解决
+
+在这个示例中，我们在每个消息的末尾添加了换行符（'\n'）作为消息的分隔符。服务器端使用bufio.NewReader来读取数据，并使用ReadString方法按行读取消息，从而准确地分割不同的消息。
+
+通过在发送消息时添加换行符，并在服务器端按行读取消息，我们可以解决TCP粘包问题，确保每个消息都被独立地接收和处理。
+
+你可以运行修复后的代码，并观察服务器端接收到的数据情况，验证TCP粘包问题是否得到解决。你应该能够正确地分辨出每个独立的消息。
+
+peng@pengdeMacBook-Air server % go run .
+Server started. Listening on localhost:8888
+New connection accepted.
+Received message: Hello
+
+Received message: World
+
+Error reading: EOF
+
+
+peng@pengdeMacBook-Air client % go run .
+Connected to server.
+Sent message: Hello
+
+Sent message: World

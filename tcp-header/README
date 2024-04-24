@@ -1,0 +1,23 @@
+使用包头。
+在这个示例中，我们使用一个固定长度的4字节前缀来标识每个消息的长度。服务器端首先读取4字节的前缀，解析出消息的长度，然后再读取对应长度的消息内容。
+
+在客户端端，我们将消息的长度编码为4字节的大端字节序，并将长度前缀和消息内容一起发送给服务器端。
+
+通过使用消息长度前缀，服务器端可以正确地解析每个消息的长度，并将消息内容正确地分离开，从而解决TCP粘包问题。
+
+你可以运行修复后的代码，并观察服务器端接收到的数据情况，验证TCP粘包问题是否得到解决。每个消息应该都可以被正确解析和处理。
+
+peng@pengdeMacBook-Air server % go run .
+Server started. Listening on localhost:8888
+New connection accepted.
+Received message: Hello
+Received message: World
+Error reading message length: EOF
+
+
+peng@pengdeMacBook-Air client % go run .
+Connected to server.
+Sent message length: 5
+Sent message: Hello
+Sent message length: 5
+Sent message: World

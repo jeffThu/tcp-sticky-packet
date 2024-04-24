@@ -1,0 +1,22 @@
+使用固定长度消息。
+
+在这个示例中，我们将消息的长度固定为messageSize，这里设置为10。服务器端在接收数据时，每次读取固定长度的数据，确保每个消息都具有相同的长度。
+
+在客户端端，我们使用fmt.Sprintf来将消息填充到固定长度，使用空格进行填充（左对齐）。然后将填充后的消息发送给服务器端。
+
+通过使用固定长度的消息，我们可以确保每个消息都被正确解析，并且不会发生粘包问题。
+
+你可以运行修复后的代码，并观察服务器端接收到的数据情况，验证TCP粘包问题是否得到解决。每个消息应该都具有相同的长度，并且不会与其他消息合并。
+
+peng@pengdeMacBook-Air server % go run .
+Server started. Listening on localhost:8888
+New connection accepted.
+Received message: Hello     
+Received message: World     
+Error reading: EOF
+
+
+peng@pengdeMacBook-Air client % go run .             
+Connected to server.
+Sent message: Hello     
+Sent message: World    
